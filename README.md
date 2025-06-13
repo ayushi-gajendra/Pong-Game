@@ -2,6 +2,11 @@
 
 # 🏓 Pong Game in Python
 
+
+[![Python](https://img.shields.io/badge/Python-3.7%2B-blue?logo=python)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+
 A simple two-player Pong game built using Python’s built-in `turtle` module. Features smooth ball movement, paddle collision, score tracking, and keyboard controls.
 
 ---
