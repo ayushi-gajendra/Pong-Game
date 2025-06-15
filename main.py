@@ -12,7 +12,7 @@ screen.bgcolor("black")                     # Background color
 screen.title("Pong")                        # Window title
 screen.tracer(0)                            # Turn off auto refresh
 
-# ------------------- Game Object Initialization ------------------- #
+# ------------------ Game Object Initialization ------------------- #
 r_paddle = Paddle((350, 0))                 # Right paddle
 l_paddle = Paddle((-350, 0))                # Left paddle
 ball = Ball()                               # Ball
