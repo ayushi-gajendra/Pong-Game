@@ -1,52 +1,55 @@
+# ------------------- Import Modules ------------------- #
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
 from scoreboard import Scoreboard
 import time
 
-screen=Screen()
-screen.setup(width=800, height=600)
-screen.bgcolor("black")
-screen.title("Pong")
-screen.tracer(0)
+# ------------------- Screen Setup ------------------- #
+screen = Screen()
+screen.setup(width=800, height=600)         # Set screen size
+screen.bgcolor("black")                     # Background color
+screen.title("Pong")                        # Window title
+screen.tracer(0)                            # Turn off auto refresh
 
-r_paddle=Paddle((350,0))
-l_paddle=Paddle((-350,0))
-ball=Ball()
-score=Scoreboard()
+# ------------------- Game Object Initialization ------------------- #
+r_paddle = Paddle((350, 0))                 # Right paddle
+l_paddle = Paddle((-350, 0))                # Left paddle
+ball = Ball()                               # Ball
+score = Scoreboard()                        # Scoreboard
 
+# ------------------- Key Bindings ------------------- #
 screen.listen()
-screen.onkey(r_paddle.go_up,"Up")
-screen.onkey(r_paddle.go_down, "Down")
-screen.onkey(l_paddle.go_up,"w")
-screen.onkey(l_paddle.go_down, "s")
+screen.onkey(r_paddle.go_up, "Up")          # Right paddle up
+screen.onkey(r_paddle.go_down, "Down")      # Right paddle down
+screen.onkey(l_paddle.go_up, "w")           # Left paddle up
+screen.onkey(l_paddle.go_down, "s")         # Left paddle down
 
-game_is_on=True
+# ------------------- Game Loop ------------------- #
+game_is_on = True
 while game_is_on:
+    ball.move()                             # Move the ball
+    time.sleep(ball.time_delay)             # Control ball speed
+    screen.update()                         # Refresh screen
 
-    ball.move()
-    time.sleep(ball.time_delay)
-    screen.update()
-
-    #detect collision with wall
-    if ball.ycor() > 280 or ball.ycor()< -280:
+    # ----------- Wall Collision Detection ----------- #
+    if ball.ycor() > 280 or ball.ycor() < -280:
         ball.bounce_y()
 
-    #detect collision with paddle
-    # if (((r_paddle.ycor()-50)<ball.ycor()<(r_paddle.ycor()+50) and ball.xcor()==330) or
-    #       ((l_paddle.ycor()-50)<ball.ycor()<(l_paddle.ycor()+50) and ball.xcor()==-330)):
-    if (ball.distance(r_paddle)<50 and ball.xcor()>330) or (ball.distance(l_paddle)<50 and ball.xcor()>-330):
+    # ----------- Paddle Collision Detection ----------- #
+    if (ball.distance(r_paddle) < 50 and ball.xcor() > 330) or \
+       (ball.distance(l_paddle) < 50 and ball.xcor() < -330):
         ball.bounce_x()
 
-    #right side misses
-    if ball.xcor()>380:
+    # ----------- Right Paddle Missed ----------- #
+    if ball.xcor() > 380:
         ball.reset_pos()
         score.l_point()
-    #left side misses
-    if ball.xcor()<-380:
+
+    # ----------- Left Paddle Missed ----------- #
+    if ball.xcor() < -380:
         ball.reset_pos()
         score.r_point()
 
-
-
+# ------------------- Exit on Click ------------------- #
 screen.exitonclick()
